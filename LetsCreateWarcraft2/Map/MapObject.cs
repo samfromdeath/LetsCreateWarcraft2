@@ -56,7 +56,7 @@ namespace LetsCreateWarcraft2.Map
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _sprite.Draw(spriteBatch);
+            _sprite.Draw(spriteBatch, true);
             if (_selected)
                 SelectRectangle.Draw(spriteBatch, _sprite.Rectangle);
         }

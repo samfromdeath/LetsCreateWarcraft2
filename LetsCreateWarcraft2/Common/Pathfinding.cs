@@ -21,21 +21,16 @@ namespace LetsCreateWarcraft2.Common
         private int _goalX;
         private int _goalY;
         private int _deep;
-        private Sprite _sprite;
-        private bool _checkForUnit;
+        private Sprite _sprite;        
         private int _id;
-
-        public int MainGoalX;
-        public int MainGoalY;
-
+        
         public Pathfinding(int id, Sprite sprite, ManagerTiles managerTiles, ManagerUnits managerUnits)
         {
             _id = id;
             _sprite = sprite;
             _managerTiles = managerTiles;
             _path = new List<Vector2>();
-            _managerUnits = managerUnits;
-            _checkForUnit = true;
+            _managerUnits = managerUnits;            
         }
 
         public List<Vector2> FindPath(ref int xTilePos, ref int yTilePos) //, int _mainGoalX, int _mainGoalY)
@@ -97,58 +92,7 @@ namespace LetsCreateWarcraft2.Common
                             break;
                         }
                     }
-
-                    //if (!CheckCollision(_goalX - OutSide, _goalY, true))
-                    //{
-                    //    this._goalX = _goalX - OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX, _goalY - OutSide, true))
-                    //{
-                    //    this._goalY = _goalY - OutSide;
-                    //    break;
-                    //}
-                    //if (!CheckCollision(_goalX + OutSide, _goalY, true))
-                    //{
-                    //    this._goalX = _goalX + OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX, _goalY + OutSide, true))
-                    //{
-                    //    this._goalY = _goalY + OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX + OutSide, _goalY + OutSide, true))
-                    //{
-                    //    this._goalX = _goalX + OutSide;
-                    //    this._goalY = _goalY + OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX - OutSide, _goalY + OutSide, true))
-                    //{
-                    //    this._goalX = _goalX - OutSide;
-                    //    this._goalY = _goalY + OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX - OutSide, _goalY - OutSide, true))
-                    //{
-                    //    this._goalX = _goalX - OutSide;
-                    //    this._goalY = _goalY - OutSide;
-                    //    break;
-                    //}
-
-                    //if (!CheckCollision(_goalX + OutSide, _goalY - OutSide, true))
-                    //{
-                    //    this._goalX = _goalX + OutSide;
-                    //    this._goalY = _goalY - OutSide;
-                    //    break;
-                    //}
-
+                    
                     OutSide++;
                 }
 
@@ -180,7 +124,7 @@ namespace LetsCreateWarcraft2.Common
         {
             _deep++;
 
-            if (_deep > 2500)
+            if (_deep > 1000)
                 return;
 
             _openList.Remove(node);
@@ -230,7 +174,7 @@ namespace LetsCreateWarcraft2.Common
 
         public bool CheckCollision(int x, int y, bool CheckUnits = false)
         {            
-            return x < 0 || y < 0 || x >= 800 / 32 || y >= 480 / 32 || (CheckUnits && _managerUnits.CheckCollision(x, y, _id, CheckUnits)) || _managerTiles.CheckCollision(x, y);
+            return x < 0 || y < 0 || x >= _managerTiles.TileWidth || y >= _managerTiles.TileHeight || (CheckUnits && _managerUnits.CheckCollision(x, y, _id, CheckUnits)) || _managerTiles.CheckCollision(x, y);
         }
 
         private PathNode PickNextBest()

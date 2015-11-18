@@ -16,7 +16,7 @@
     </MonoGameContentBuilderExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
@@ -46,6 +46,7 @@
     <Compile Include="Manager\ManagerMouse.cs" />
     <Compile Include="Manager\ManagerTiles.cs" />
     <Compile Include="Manager\ManagerUnits.cs" />
+    <Compile Include="Map\Camera.cs" />
     <Compile Include="Map\MapObject.cs" />
     <Compile Include="Map\Movement.cs" />
     <Compile Include="Map\Sprite.cs" />

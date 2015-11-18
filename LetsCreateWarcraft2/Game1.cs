@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using LetsCreateWarcraft2.Common;
 using LetsCreateWarcraft2.Manager;
+using LetsCreateWarcraft2.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,7 @@ namespace LetsCreateWarcraft2
         private ManagerMouse _managerMouse;
         private ManagerTiles _managerTiles;
         private ManagerUnits _managerUnits;
+        private Camera _camera;
 
         public Game1()
             : base()
@@ -35,8 +37,14 @@ namespace LetsCreateWarcraft2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _managerMouse = new ManagerMouse();
-            _managerTiles = new ManagerTiles();
+            _camera = new Camera();            
+            _camera.ViewportWidth = graphics.GraphicsDevice.Viewport.Width;
+            _camera.ViewportHeight = graphics.GraphicsDevice.Viewport.Height;
+
+            _camera.MoveCamera(_camera.ViewportCenter);
+            
+            _managerMouse = new ManagerMouse(_camera);
+            _managerTiles = new ManagerTiles(2000, 2000);
             _managerUnits = new ManagerUnits(_managerMouse, _managerTiles);
             base.Initialize();
         }
@@ -73,7 +81,9 @@ namespace LetsCreateWarcraft2
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {           
+        {
+            _camera.HandleInput(Keyboard.GetState(), null);
+
             _managerMouse.Update();
             _managerUnits.Update();
             // TODO: Add your update logic here
@@ -88,10 +98,14 @@ namespace LetsCreateWarcraft2
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+    null, null, null, null, _camera.TranslationMatrix);
+
             _managerTiles.Draw(spriteBatch);
             _managerUnits.Draw(spriteBatch);
             _managerMouse.Draw(spriteBatch);
+
+            
          
             spriteBatch.End();
             // TODO: Add your drawing code here

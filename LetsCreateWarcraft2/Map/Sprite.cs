@@ -99,7 +99,7 @@ namespace LetsCreateWarcraft2.Map
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool unit = false)
         {
             spriteBatch.Draw(_texture, new Rectangle((int)_positon.X, (int)_positon.Y, _width, _height), Color.White);
         }

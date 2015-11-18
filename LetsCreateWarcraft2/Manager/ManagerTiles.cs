@@ -12,16 +12,22 @@ namespace LetsCreateWarcraft2.Manager
     {
         private List<TileGraphic> _layerOne;
         private List<TileGraphic> _layerTwo;
-        private List<TileCollision> _collisionLayer;        
+        private List<TileCollision> _collisionLayer;
 
-        public ManagerTiles()
+        public int TileWidth;
+        public int TileHeight;
+
+        public ManagerTiles(int Width, int Height)
         {
             _collisionLayer = new List<TileCollision>();
             //For test
+            TileWidth = Width / 32;
+            TileHeight = Height / 32;
+
             _layerOne = new List<TileGraphic>();
-            for (int n = 0; n < 800 / 32; n++)
+            for (int n = 0; n < TileWidth; n++)
             {
-                for (int i = 0; i < 480 / 32; i++)
+                for (int i = 0; i < TileHeight; i++)
                 {
                     _layerOne.Add(new TileGraphic(n, i, 1, 0));
                 }

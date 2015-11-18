@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using Microsoft.Xna.Framework.Input;
+using LetsCreateWarcraft2.Map;
 
 namespace LetsCreateWarcraft2.Manager
 {
@@ -21,6 +22,12 @@ namespace LetsCreateWarcraft2.Manager
         private Rectangle _selectRectangle;
         private bool _mouseDown;
         private MouseState Prev;
+        private Camera _camera;
+
+        public ManagerMouse(Camera camera)
+        {
+            _camera = camera;
+        }
 
         private event EventHandler<MouseEventArgs> _mouseEventHandler;
         private event EventHandler<MouseClickEventArgs> _mouseClickEventHandler;
@@ -44,20 +51,20 @@ namespace LetsCreateWarcraft2.Manager
             if (mouse.RightButton == ButtonState.Pressed)
             {
                 if (_mouseClickEventHandler != null)
-                    _mouseClickEventHandler(this, new MouseClickEventArgs(new Vector2(mouse.X, mouse.Y)));
+                    _mouseClickEventHandler(this, new MouseClickEventArgs(_camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y))));
             }
 
             if (mouse.LeftButton == ButtonState.Pressed && !_mouseDown)
             {
                 _mouseDown = true;
-                _position = new Vector2(mouse.X, mouse.Y);
+                _position = _camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y));
                 
                _selectCorner = _position;
                 _selectRectangle = new Rectangle((int)_position.X, (int)_position.Y, 0, 0);
             }
             else if (mouse.LeftButton == ButtonState.Pressed)
             {
-                _selectCorner = new Vector2(mouse.X, mouse.Y);
+                _selectCorner = _camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y));
                 if (_selectCorner.X > _position.X)
                 {
                     _selectRectangle.X = (int)_position.X;
