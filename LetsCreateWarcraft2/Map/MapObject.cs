@@ -10,6 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LetsCreateWarcraft2.Map
 {
+    /// <summary>
+    /// http://www.spriters-resource.com/pc_computer/warcraft2/
+    /// </summary>
     class MapObject
     {
         private static int _idCounter;
